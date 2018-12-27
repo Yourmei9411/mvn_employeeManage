@@ -8,7 +8,7 @@
   <!-- 配置数据库连接 -->
   <context id="DB2Tables" targetRuntime="MyBatis3">
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://localhost:3306/maven4"
+        connectionURL="jdbc:mysql://localhost:3306/maven4?useSSL=false"
         userId="root"
         password="123456">
     </jdbcConnection>
