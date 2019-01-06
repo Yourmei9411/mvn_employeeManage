@@ -6,7 +6,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import caffrey.bean.Department;
+import caffrey.bean.Employee;
 import caffrey.dao.DepartmentMapper;
+import caffrey.dao.EmployeeMapper;
 
 import org.junit.Test;
 
@@ -16,6 +18,9 @@ public class MapperTest {
 	
 	@Autowired
 	DepartmentMapper departmentmapper;
+	
+	@Autowired
+	EmployeeMapper employeemapper;
 	
 	@Test
 	public void CRUDTest()
@@ -28,6 +33,9 @@ public class MapperTest {
 		
 		Department dept2 = departmentmapper.selectByPrimaryKey(3);
 		System.out.println(dept2);
+		
+		Employee emp1 = employeemapper.selectByPrimaryKeyWithDept(1008);
+		System.out.println(emp1);
 	}
 	
 }

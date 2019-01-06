@@ -11,7 +11,23 @@ public class Employee {
 
     private Integer dId;
 
-    public Integer getEmpId() {
+    private Department dept;
+    
+    @Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", gender=" + gender + ", email=" + email
+				+ ", dId=" + dId + ", dept=" + dept + "]";
+	}
+
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
+	public Integer getEmpId() {
         return empId;
     }
 
@@ -50,4 +66,6 @@ public class Employee {
     public void setdId(Integer dId) {
         this.dId = dId;
     }
+    
+    
 }

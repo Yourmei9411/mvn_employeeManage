@@ -18,6 +18,8 @@ public interface EmployeeMapper {
 
     List<Employee> selectByExample(EmployeeExample example);
 
+    Employee selectByPrimaryKeyWithDept(Integer empId);
+    
     Employee selectByPrimaryKey(Integer empId);
 
     int updateByExampleSelective(@Param("record") Employee record, @Param("example") EmployeeExample example);

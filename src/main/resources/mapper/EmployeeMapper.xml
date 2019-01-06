@@ -8,6 +8,17 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="d_id" jdbcType="INTEGER" property="dId" />
   </resultMap>
+  <resultMap id="ResultMapWithDept" type="caffrey.bean.Employee">
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <association property="dept" javaType="caffrey.bean.Department">
+    	<id column="d_id" jdbcType="INTEGER" property="deptId"/>
+    	<result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -69,6 +80,9 @@
   <sql id="Base_Column_List">
     emp_id, emp_name, gender, email, d_id
   </sql>
+  <sql id="Column_List_WithDept">
+  	emp_id, emp_name, gender, email, d_id, dept_name
+  </sql>
   <select id="selectByExample" parameterType="caffrey.bean.EmployeeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -82,6 +96,13 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+  <!-- Employee selectByPrimaryKeyWithDept(Integer empId); -->
+  <select id="selectByPrimaryKeyWithDept" parameterType="java.lang.Integer" resultMap="ResultMapWithDept">
+  	select 
+    <include refid="Column_List_WithDept" />
+    from tbl_emp e left join tbl_dept d on e.d_id=d.dept_id
+    where emp_id = #{empId,jdbcType=INTEGER}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
