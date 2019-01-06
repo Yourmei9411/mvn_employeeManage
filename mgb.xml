@@ -7,6 +7,11 @@
 
   <!-- 配置数据库连接 -->
   <context id="DB2Tables" targetRuntime="MyBatis3">
+  	<commentGenerator>
+  		<!--关闭MBG的自动注释  -->
+		<property name="suppressAllComments" value="true"/>
+	</commentGenerator>
+	
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
         connectionURL="jdbc:mysql://localhost:3306/maven4?useSSL=false"
         userId="root"
@@ -42,6 +47,6 @@
 	<!-- table标签指定每个表的生成策略  -->
 	<table tableName="tbl_emp" domainObjectName="Employee"></table>
 	<table tableName="tbl_dept" domainObjectName="Department"></table>
-	
+
   </context>
 </generatorConfiguration>
