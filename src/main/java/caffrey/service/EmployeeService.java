@@ -16,7 +16,7 @@ public class EmployeeService {
 	
 	public List<Employee> getAll() {
 		System.out.println("getAll Emp in EmployeeService");
-		List<Employee> emps = employeemapper.selectByExample(null);
+		List<Employee> emps = employeemapper.selectByExampleWithDept(null);
 		
 		return emps;
 	}

@@ -83,6 +83,21 @@
   <sql id="Column_List_WithDept">
   	emp_id, emp_name, gender, email, d_id, dept_name
   </sql>
+  <!--List<Employee> selectByExampleWithDept(EmployeeExample example);  -->
+  <select id="selectByExampleWithDept" parameterType="caffrey.bean.EmployeeExample" resultMap="ResultMapWithDept">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Column_List_WithDept" />
+    from tbl_emp e left join tbl_dept d on e.d_id=d.dept_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="caffrey.bean.EmployeeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
