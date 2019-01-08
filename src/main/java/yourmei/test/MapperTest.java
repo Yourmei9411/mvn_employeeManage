@@ -9,6 +9,7 @@ import caffrey.bean.Department;
 import caffrey.bean.Employee;
 import caffrey.dao.DepartmentMapper;
 import caffrey.dao.EmployeeMapper;
+import caffrey.service.EmployeeService;
 
 import org.junit.Test;
 
@@ -21,6 +22,9 @@ public class MapperTest {
 	
 	@Autowired
 	EmployeeMapper employeemapper;
+	
+	@Autowired
+	EmployeeService employeeService; 
 	
 	@Test
 	public void CRUDTest()
@@ -36,6 +40,8 @@ public class MapperTest {
 		
 		Employee emp1 = employeemapper.selectByPrimaryKeyWithDept(1008);
 		System.out.println(emp1);
+		
+		System.out.println(employeeService);
 	}
 	
 }

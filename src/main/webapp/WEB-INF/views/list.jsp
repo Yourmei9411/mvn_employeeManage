@@ -4,12 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>员工列表</title>
 </head>
 <body>
-	<a href="HelloTest">Test</a><br><br>
-	<a href="emps">员工管理系统</a><br><br>
+	<h4>员工信息表</h4>
 </body>
 </html>
-
-

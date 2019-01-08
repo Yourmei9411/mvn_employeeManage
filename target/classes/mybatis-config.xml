@@ -4,9 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   
  <configuration>
- 
  	<settings>
  		<setting name="mapUnderscoreToCamelCase" value="true"/>
  	</settings>
-
+ 	
+	<plugins>
+ 		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+ 	</plugins>
  </configuration>
