@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,17 +41,19 @@
 					<th>departmentName</th>
 					<th>操作</th>
 				</tr>
-				<tr>
-					<th>1</th>
-					<th>aaa</th>
-					<th>aaa@qq.cpm</th>
-					<th>男</th>
-					<th>嗷嗷</th>
-					<th>
-						<button class="btn btn-primary btn-sm">编辑</button>
-						<button class="btn btn-primary btn-sm">删除</button>
-					</th>
-				</tr>
+					<c:forEach items="${page.list}" var="emp">
+						<tr>
+							<th>${emp.empId}</th>
+							<th>${emp.empName}</th>
+							<th>${emp.email}</th>
+							<th>${emp.gender=='M'?"男":"女"}</th>
+							<th>${emp.dept.deptName}</th>
+							<th>
+								<button class="btn btn-primary btn-sm">编辑</button>
+								<button class="btn btn-primary btn-sm">删除</button>
+							</th>
+						</tr>
+					</c:forEach> 
 			</table>
 		</div>
 		<!--页面信息  -->
