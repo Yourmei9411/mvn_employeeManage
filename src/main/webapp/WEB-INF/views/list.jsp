@@ -60,32 +60,39 @@
 		<div class="row">
 			<!--分页文字信息  -->
 			<dir class="col-lg-6">
-				当前页数：xxx
+				当前第${page.pageNum } 页  总共${page.pages } 页 总共${page.total } 条记录
 			</dir>
 			<!--分页条信息  -->
 			<dir class="col-lg-6">
 				<nav aria-label="Page navigation">
 				  <ul class="pagination">
 				  	<li>
-				  		<a href="#">首页</a>
+				  		<a href="emps">首页</a>
 				  	</li>
+				  	<c:if test="${page.hasPreviousPage == true}">
+				  		<li>
+					      <a href="emps?pageNum=${page.pageNum-1 }" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+				  	</c:if>
+				    <c:forEach items="${page.navigatepageNums }" var="page_num">
+				    	<c:if test="${page_num == page.pageNum}">
+				    		<li class = "active"><a href="emps?pageNum=${page_num }">${page_num }</a></li>
+				    	</c:if>
+				    	<c:if test="${page_num != page.pageNum}">
+				    		<li><a href="emps?pageNum=${page_num }">${page_num }</a></li>
+				    	</c:if>
+				    </c:forEach>
+				    <c:if test="${page.hasNextPage == true}">
+				    	<li>
+					      <a href="emps?pageNum=${page.pageNum+1 }" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+				    </c:if>
 				    <li>
-				      <a href="#" aria-label="Previous">
-				        <span aria-hidden="true">&laquo;</span>
-				      </a>
-				    </li>
-				    <li><a href="#">1</a></li>
-				    <li><a href="#">2</a></li>
-				    <li><a href="#">3</a></li>
-				    <li><a href="#">4</a></li>
-				    <li><a href="#">5</a></li>
-				    <li>
-				      <a href="#" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
-				      </a>
-				    </li>
-				    <li>
-				  		<a href="#">末页</a>
+				  		<a href="emps?pageNum=${page.pages }">末页</a>
 				  	</li>
 				  </ul>
 				</nav>
