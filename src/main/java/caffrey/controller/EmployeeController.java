@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,6 +21,23 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 	
+	@ResponseBody
+	@RequestMapping(value = "emps")
+	public PageInfo ShowAllEmps(@RequestParam(value="pageNum", defaultValue="1") Integer pageNumber)
+	{
+		System.out.println("查询所有员工信息  pageNumber: " + pageNumber);
+		List<Employee> emps;
+		PageHelper.startPage(pageNumber, 5);
+		emps = employeeService.getAll();
+		PageInfo<Employee> pageInfo = new PageInfo<>(emps, 5);
+		for (Employee employee : emps) {
+			System.out.println(employee);
+		}
+		
+		return pageInfo;
+	}
+	
+	/*
 	@RequestMapping(value = "emps")
 	public String ShowAllEmps(@RequestParam(value="pageNum", defaultValue="1") Integer pageNumber, 
 			ModelMap model)
@@ -38,5 +56,5 @@ public class EmployeeController {
 		
 		return "list";
 	}
-	
+	*/
 }
