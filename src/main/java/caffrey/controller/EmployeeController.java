@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import caffrey.bean.Employee;
+import caffrey.bean.Msg;
 import caffrey.service.EmployeeService;
 
 @Controller
@@ -23,7 +24,7 @@ public class EmployeeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "emps")
-	public PageInfo ShowAllEmps(@RequestParam(value="pageNum", defaultValue="1") Integer pageNumber)
+	public Msg ShowAllEmps(@RequestParam(value="pageNum", defaultValue="1") Integer pageNumber)
 	{
 		System.out.println("查询所有员工信息  pageNumber: " + pageNumber);
 		List<Employee> emps;
@@ -34,7 +35,7 @@ public class EmployeeController {
 			System.out.println(employee);
 		}
 		
-		return pageInfo;
+		return Msg.success().add("page", pageInfo);
 	}
 	
 	/*
