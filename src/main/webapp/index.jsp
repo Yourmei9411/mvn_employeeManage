@@ -48,12 +48,10 @@
 		<!--页面信息  -->
 		<div class="row">
 			<!--分页文字信息  -->
-			<dir class="col-lg-6">
-				当前第  页  总共 页 总共条记录
+			<dir class="col-lg-6" id="pageinfo">
 			</dir>
 			<!--分页条信息  -->
-			<dir class="col-lg-6">
-				
+			<dir class="col-lg-6" id="pagenav">
 			</dir>
 		</div>
 	</div>	
@@ -65,29 +63,55 @@
 				data:"pageNum=1",
 				type:"GET",
 				success:function(result){
-					//console.log(result);
+					console.log(result);
 					build_emps_table(result);
+					build_page_info(result);
+					buitd_page_nav(result);
 				}
 			});	
 		});
 		
+		function buitd_page_nav(result)
+		{
+			var ul = $("<ul></ul>").addClass("pagination");
+			var firstPage = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
+			var lastPage = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
+			var prevPge = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "#"));
+			var nextPge = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "#"));
+			ul.append(firstPage);
+			ul.append(prevPge);
+			$.each(result.map.page.navigatepageNums, function(index, item){
+				var pageli = $("<li></li>").append($("<a></a>").append(item).attr("href", "#"));
+				ul.append(pageli);
+			})
+			ul.append(nextPge);
+			ul.append(lastPage).appendTo("#pagenav"); 
+		}
+		
+		function build_page_info(result)
+		{
+			$("#pageinfo").append("当前第 " + result.map.page.pageNum +
+					" 页  总共 " + result.map.page.pages +
+					" 页 总共 " + result.map.page.total + " 条记录");
+		}
+		
 		function build_emps_table(result)
 		{
-			console.log("build_emps_table");
+			//console.log("build_emps_table");
 			var emps = result.map.page.list;
 			$.each(emps, function(index, item)
 			{
 				var empIdTd = $("<td></td>").append(item.empId);
-				console.log(item.empId);
+				//console.log(item.empId);
 				var empNameTd = $("<td></td>").append(item.empName);
-				console.log(item.empName);
+				//console.log(item.empName);
 				var emailTd = $("<td></td>").append(item.email);
-				console.log(item.email);
+				//console.log(item.email);
 				var gender = item.gender=="M"?"男":"女";
 				var genderTd = $("<td></td>").append(gender);
-				console.log(gender);
+				//console.log(gender);
 				var departmentNameTd = $("<td></td>").append(item.dept.deptName);
-				console.log(item.dept.deptName);
+				//console.log(item.dept.deptName);
 				
 				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm").append("编辑");
 				var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm").append("删除");
