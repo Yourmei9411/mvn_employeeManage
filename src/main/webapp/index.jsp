@@ -58,9 +58,14 @@
 	
 	<script type="text/javascript">
 		$(function(){
+			to_page(1);
+		});
+		
+		function to_page(pn)
+		{
 			$.ajax({
 				url:"emps",
-				data:"pageNum=3",
+				data:"pageNum="+pn,
 				type:"GET",
 				success:function(result){
 					console.log(result);
@@ -69,20 +74,27 @@
 					buitd_page_nav(result);
 				}
 			});	
-		});
+		}
 		
 		function buitd_page_nav(result)
 		{
+			$("#pagenav").empty();
 			var ul = $("<ul></ul>").addClass("pagination");
 			if(result.map.page.isFirstPage != true)
 			{
 				var firstPage = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
+				firstPage.click(function(){
+					to_page(1);
+				});
 				ul.append(firstPage);
 			}
 			
 			if(result.map.page.hasPreviousPage == true)
 			{
 				var prevPge = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "#"));
+				prevPge.click(function(){
+					to_page(result.map.page.pageNum - 1);
+				});
 				ul.append(prevPge);
 			}
 			
@@ -92,17 +104,26 @@
 				{
 					pageli.addClass("active");
 				}
+				pageli.click(function(){
+					to_page(item);
+				});
 				ul.append(pageli);
 			})
 			if(result.map.page.hasNextPage == true)
 			{
 				var nextPge = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "#"));
+				nextPge.click(function(){
+					to_page(result.map.page.pageNum + 1);
+				});
 				ul.append(nextPge);
 			}
 			
 			if(result.map.page.isLastPage != true)
 			{
 				var lastPage = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
+				lastPage.click(function(){
+					to_page(result.map.page.pages);
+				});
 				ul.append(lastPage); 
 			}
 			
@@ -111,6 +132,7 @@
 		
 		function build_page_info(result)
 		{
+			$("#pageinfo").empty();
 			$("#pageinfo").append("当前第 " + result.map.page.pageNum +
 					" 页  总共 " + result.map.page.pages +
 					" 页 总共 " + result.map.page.total + " 条记录");
@@ -118,6 +140,7 @@
 		
 		function build_emps_table(result)
 		{
+			$("#emps_table tbody").empty();
 			//console.log("build_emps_table");
 			var emps = result.map.page.list;
 			$.each(emps, function(index, item)
