@@ -14,7 +14,65 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!-- 新增员工模态框  -->
+	<div class="modal fade" id="emp_add_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	      
+	        <form class="form-horizontal">
+	          <!-- 员工名字 -->
+			  <div class="form-group">
+			    <label for="inputEmail3" class="col-sm-2 control-label">empName</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="empName" class="form-control" id="input_emp_name" placeholder="empName">
+			    </div>
+			  </div>
+			  
+			  <!-- 员工邮箱 -->
+			  <div class="form-group">
+			    <label for="inputPassword3" class="col-sm-2 control-label">email</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="email" class="form-control" id="input_email" placeholder="email">
+			    </div>
+			  </div>
+			  
+			  <!-- 员工性别 -->
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">gender</label>
+			    <div class="col-sm-10">
+			      <label class="radio-inline">
+					  <input type="radio" name="gender" id="gender1_add_input" value="M" checked="checked"> Male
+				  </label>
+				  <label class="radio-inline">
+					  <input type="radio" name="gender" id="gender2_add_input" value="F"> Female
+				  </label>
+			    </div>
+			  </div>
+			  
+			  <!-- 下拉框选择部门名字，提交部门id -->
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">deptName</label>
+			    <div class="col-sm-4">
+			    	<!-- 部门提交部门id即可 -->
+			      <select class="form-control" name="dId" id="dept_id_select"></select>
+			    </div>
+			  </div>
+			</form>
+	      
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 	<div class="container">
 		<!--标题  -->
 		<div class="row">
@@ -23,7 +81,7 @@
 		<!--按钮  -->
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-8">
-				<button class="btn btn-primary">新增</button>
+				<button id="emp_add_button" class="btn btn-primary">新增</button>
 				<button class="btn btn-danger">删除</button>
 			</div>
 		</div>
@@ -60,6 +118,29 @@
 		$(function(){
 			to_page(1);
 		});
+		
+		$("#emp_add_button").click(function(){
+			$("#emp_add_modal").modal();
+			getDepts();
+		})
+		
+		function getDepts()
+		{
+			$.ajax({
+				url:"depts",
+				type:"GET",
+				success:function(result)
+				{
+					//console.log(result);
+					var depts = result.map.depts;
+					$.each(depts,function(){
+						//console.log(this);
+						var optionEle = $("<option></option>").append(this.deptName).attr("value", this.deptId);
+						$("#dept_id_select").append(optionEle);
+					})
+				}
+			})
+		}
 		
 		function to_page(pn)
 		{
