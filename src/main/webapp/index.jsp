@@ -60,7 +60,7 @@
 		$(function(){
 			$.ajax({
 				url:"emps",
-				data:"pageNum=1",
+				data:"pageNum=3",
 				type:"GET",
 				success:function(result){
 					console.log(result);
@@ -74,18 +74,39 @@
 		function buitd_page_nav(result)
 		{
 			var ul = $("<ul></ul>").addClass("pagination");
-			var firstPage = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
-			var lastPage = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
-			var prevPge = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "#"));
-			var nextPge = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "#"));
-			ul.append(firstPage);
-			ul.append(prevPge);
+			if(result.map.page.isFirstPage != true)
+			{
+				var firstPage = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
+				ul.append(firstPage);
+			}
+			
+			if(result.map.page.hasPreviousPage == true)
+			{
+				var prevPge = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "#"));
+				ul.append(prevPge);
+			}
+			
 			$.each(result.map.page.navigatepageNums, function(index, item){
 				var pageli = $("<li></li>").append($("<a></a>").append(item).attr("href", "#"));
+				if(item == result.map.page.pageNum)
+				{
+					pageli.addClass("active");
+				}
 				ul.append(pageli);
 			})
-			ul.append(nextPge);
-			ul.append(lastPage).appendTo("#pagenav"); 
+			if(result.map.page.hasNextPage == true)
+			{
+				var nextPge = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "#"));
+				ul.append(nextPge);
+			}
+			
+			if(result.map.page.isLastPage != true)
+			{
+				var lastPage = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
+				ul.append(lastPage); 
+			}
+			
+			ul.appendTo("#pagenav"); 
 		}
 		
 		function build_page_info(result)
