@@ -21,4 +21,9 @@ public class EmployeeService {
 		return emps;
 	}
 
+	public void addNewEmp(Employee employee) {
+		// TODO Auto-generated method stub
+		employeemapper.insert(employee);
+	}
+
 }

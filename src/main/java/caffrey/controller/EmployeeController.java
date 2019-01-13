@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,6 +37,17 @@ public class EmployeeController {
 		}
 		
 		return Msg.success().add("page", pageInfo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "emps", method=RequestMethod.POST)
+	public Msg AddNewEmp(Employee employee)
+	{
+		System.out.println("AddNewEmp" + employee);
+		
+		employeeService.addNewEmp(employee);
+		
+		return Msg.success();
 	}
 	
 	/*

@@ -20,14 +20,14 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	        <h4 class="modal-title" id="myModalLabel">新增员工</h4>
 	      </div>
 	      <div class="modal-body">
 	      
 	        <form class="form-horizontal">
 	          <!-- 员工名字 -->
 			  <div class="form-group">
-			    <label for="inputEmail3" class="col-sm-2 control-label">empName</label>
+			    <label class="col-sm-2 control-label">empName</label>
 			    <div class="col-sm-10">
 			      <input type="text" name="empName" class="form-control" id="input_emp_name" placeholder="empName">
 			    </div>
@@ -35,7 +35,7 @@
 			  
 			  <!-- 员工邮箱 -->
 			  <div class="form-group">
-			    <label for="inputPassword3" class="col-sm-2 control-label">email</label>
+			    <label class="col-sm-2 control-label">email</label>
 			    <div class="col-sm-10">
 			      <input type="text" name="email" class="form-control" id="input_email" placeholder="email">
 			    </div>
@@ -67,7 +67,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary">保存</button>
+	        <button id="btn_add_emp_request" type="button" class="btn btn-primary">保存</button>
 	      </div>
 	    </div>
 	  </div>
@@ -122,6 +122,41 @@
 		$("#emp_add_button").click(function(){
 			$("#emp_add_modal").modal();
 			getDepts();
+		})
+		
+		$("#btn_add_emp_request").click(function(){
+			var empName = $("#input_emp_name").val();
+			console.log(empName);
+			
+			var email = $("#input_email").val();
+			console.log(email);
+			
+			if($("#gender1_add_input").attr("checked") == "checked")
+			{
+				var gender = "M";
+			}
+			else
+			{
+				var gender = "F";
+			}
+			console.log(gender);
+			
+			var dept_id = $("#dept_id_select").val();
+			console.log(dept_id);
+			
+			var new_emp = $("#emp_add_modal form").serialize();
+			console.log(new_emp);
+			
+			$.ajax({
+				url:"emps",
+				type:"POST",
+				data:$("#emp_add_modal form").serialize(),
+				success:function(result)
+				{
+					console.log(result.code);
+					console.log("emp_add POST");
+				}
+			})
 		})
 		
 		function getDepts()
