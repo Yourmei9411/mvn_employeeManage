@@ -18,17 +18,22 @@
 	<div class="modal fade" id="emp_add_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
+	      <!-- 标题信息 -->
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel">新增员工</h4>
 	      </div>
+	      
+	      <!-- 主题信息 -->
 	      <div class="modal-body">
 	      
+	      	<!-- 表单 -->
 	        <form class="form-horizontal">
 	          <!-- 员工名字 -->
 			  <div class="form-group">
 			    <label class="col-sm-2 control-label">empName</label>
 			    <div class="col-sm-10">
+			      <!-- name为bean中的元素名字，传入参数时候名字为name中的名 -->
 			      <input type="text" name="empName" class="form-control" id="input_emp_name" placeholder="empName">
 			    </div>
 			  </div>
@@ -43,6 +48,7 @@
 			  
 			  <!-- 员工性别 -->
 			  <div class="form-group">
+			    <!-- radio 单选框 -->
 			    <label class="col-sm-2 control-label">gender</label>
 			    <div class="col-sm-10">
 			      <label class="radio-inline">
@@ -65,6 +71,7 @@
 			</form>
 	      
 	      </div>
+	      
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 	        <button id="btn_add_emp_request" type="button" class="btn btn-primary">保存</button>
