@@ -35,6 +35,7 @@
 			    <div class="col-sm-10">
 			      <!-- name为bean中的元素名字，传入参数时候名字为name中的名 -->
 			      <input type="text" name="empName" class="form-control" id="input_emp_name" placeholder="empName">
+			      <span class="help-block"></span>
 			    </div>
 			  </div>
 			  
@@ -43,6 +44,7 @@
 			    <label class="col-sm-2 control-label">email</label>
 			    <div class="col-sm-10">
 			      <input type="text" name="email" class="form-control" id="input_email" placeholder="email">
+			      <span class="help-block"></span>
 			    </div>
 			  </div>
 			  
@@ -132,6 +134,11 @@
 		})
 		
 		$("#btn_add_emp_request").click(function(){
+			if(false == validate_emp_info())
+			{
+				return false;
+			}
+
 			var empName = $("#input_emp_name").val();
 			console.log(empName);
 			
@@ -164,7 +171,46 @@
 					console.log("emp_add POST");
 				}
 			})
+			
+			$("#emp_add_modal").modal('hide');
 		})
+		
+		function validate_emp_info()
+		{
+			var return_value = true;
+			var name = $("#input_emp_name").val();
+			//a-z A-Z 0-9和_- 6~16位 或者是 2~5位中文字符
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5}$)/;
+			$("#input_emp_name").parent().removeClass("has-error has-success");
+			$("#input_emp_name").next().text("");
+			if(regName.test(name) == false)
+			{
+				$("#input_emp_name").parent().addClass("has-error");
+				$("#input_emp_name").next().text("用户名格式错误：必须是6~16位的数字和英文或者2~5位的中文字符");		
+				return_value = false;
+			}
+			else
+			{
+				$("#input_emp_name").parent().addClass("has-success");
+			}
+			
+			var email = $("#input_email").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			$("#input_email").parent().removeClass("has-error has-success");
+			$("#input_email").next().text("");
+			if(regEmail.test(email) == false)
+			{
+				$("#input_email").parent().addClass("has-error");
+				$("#input_email").next().text("邮箱格式错误");			
+				return_value = false;
+			}
+			else
+			{
+				$("#input_email").parent().addClass("has-success");
+			}
+			
+			return return_value;
+		}
 		
 		function getDepts()
 		{
