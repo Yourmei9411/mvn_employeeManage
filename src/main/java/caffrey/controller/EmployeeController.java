@@ -50,6 +50,20 @@ public class EmployeeController {
 		return Msg.success();
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "checkEmpName")
+	public Msg checkEmpName(@RequestParam("empName")String empName)
+	{
+		if(employeeService.checkEmpName(empName) == true)
+		{
+			return Msg.success();
+		}
+		else
+		{
+			return Msg.fail();
+		}
+	}
+	
 	/*
 	@RequestMapping(value = "emps")
 	public String ShowAllEmps(@RequestParam(value="pageNum", defaultValue="1") Integer pageNumber, 

@@ -129,6 +129,8 @@
 		});
 		
 		$("#emp_add_button").click(function(){
+			//ajax没有reset函数，所以要用dom的reset方法
+			$("#emp_add_modal form")[0].reset();
 			$("#emp_add_modal").modal();
 			getDepts();
 		})
@@ -138,7 +140,18 @@
 			{
 				return false;
 			}
-
+			
+			if($("#btn_add_emp_request").attr("emp_name_va") == "error")
+			{
+				console.log("emp_name_va error");
+				return false;
+			}
+			else
+			{
+				console.log("emp_name_va success");
+				//return false;
+			}
+			
 			var empName = $("#input_emp_name").val();
 			console.log(empName);
 			
@@ -174,6 +187,34 @@
 			
 			$("#emp_add_modal").modal('hide');
 		})
+		
+		/* change事件 */
+		$("#input_emp_name").change(function(){
+			var empName = this.value;
+			$.ajax({
+				url:"checkEmpName",
+				data:"empName="+empName,
+				type:"GET",
+				success:function(result)
+				{
+					//console.log(result);
+					$("#input_emp_name").parent().removeClass("has-error has-success");
+					$("#input_emp_name").next().text("");
+					if(result.code == 100)
+					{
+						$("#input_emp_name").parent().addClass("has-success");
+						$("#input_emp_name").next().text("用户名可用");
+						$("#btn_add_emp_request").attr("emp_name_va", "success");
+					}
+					else
+					{
+						$("#input_emp_name").parent().addClass("has-error");
+						$("#input_emp_name").next().text("用户名重复");
+						$("#btn_add_emp_request").attr("emp_name_va", "error");
+					}
+				}
+			})
+		});
 		
 		function validate_emp_info()
 		{
