@@ -128,9 +128,20 @@
 			to_page(1);
 		});
 		
+		//清空表单
+		function reset_form(ele)
+		{
+			//DOM函数清空表单数据
+			$(ele)[0].reset();
+			//清空表单样式
+			$(ele).find("*").removeClass("has-error has-success");
+			$(ele).find(".help-block").text("");
+		}
+		
 		$("#emp_add_button").click(function(){
 			//ajax没有reset函数，所以要用dom的reset方法
-			$("#emp_add_modal form")[0].reset();
+			//$("#emp_add_modal form")[0].reset();
+			reset_form("#emp_add_modal form");
 			$("#emp_add_modal").modal();
 			getDepts();
 		})
