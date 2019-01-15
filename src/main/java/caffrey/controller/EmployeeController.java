@@ -54,13 +54,24 @@ public class EmployeeController {
 	@RequestMapping(value = "checkEmpName")
 	public Msg checkEmpName(@RequestParam("empName")String empName)
 	{
+		String regName = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5}$)";
+		if(empName.matches(regName) == false)
+		{
+			Msg msg = Msg.fail();
+			System.out.println("用户名格式不合法：6~16位数字或2~5位中文");
+			msg.setMessage("用户名格式不合法：6~16位数字或2~5位中文");
+			return msg;
+		}
+		
 		if(employeeService.checkEmpName(empName) == true)
 		{
 			return Msg.success();
 		}
 		else
 		{
-			return Msg.fail();
+			Msg msg = Msg.fail();
+			msg.setMessage("用户名重复");
+			return msg;
 		}
 	}
 	

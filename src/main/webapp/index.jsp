@@ -208,7 +208,6 @@
 				type:"GET",
 				success:function(result)
 				{
-					//console.log(result);
 					$("#input_emp_name").parent().removeClass("has-error has-success");
 					$("#input_emp_name").next().text("");
 					if(result.code == 100)
@@ -220,7 +219,7 @@
 					else
 					{
 						$("#input_emp_name").parent().addClass("has-error");
-						$("#input_emp_name").next().text("用户名重复");
+						$("#input_emp_name").next().text(result.message);
 						$("#btn_add_emp_request").attr("emp_name_va", "error");
 					}
 				}
