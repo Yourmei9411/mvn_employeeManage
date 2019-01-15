@@ -82,6 +82,73 @@
 	  </div>
 	</div>
 	
+	<!-- 修改员工模态框  -->
+	<div class="modal fade" id="emp_update_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <!-- 标题信息 -->
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">修改员工</h4>
+	      </div>
+	      
+	      <!-- 主题信息 -->
+	      <div class="modal-body">
+	      
+	      	<!-- 表单 -->
+	        <form class="form-horizontal">
+	          <!-- 员工名字 -->
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">empName</label>
+			    <div class="col-sm-10">
+			    	<!-- bootstrap表单中的静态控件 -->
+			      <p class="form-control-static" id="emp_update_static"></p>
+			    </div>
+			  </div>
+			  
+			  <!-- 员工邮箱 -->
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">email</label>
+			    <div class="col-sm-10">
+			      <input type="text" name="email" class="form-control" id="input_update_email" placeholder="email">
+			      <span class="help-block"></span>
+			    </div>
+			  </div>
+			  
+			  <!-- 员工性别 -->
+			  <div class="form-group">
+			    <!-- radio 单选框 -->
+			    <label class="col-sm-2 control-label">gender</label>
+			    <div class="col-sm-10">
+			      <label class="radio-inline">
+					  <input type="radio" name="gender" id="gender1_update_input" value="M" checked="checked"> Male
+				  </label>
+				  <label class="radio-inline">
+					  <input type="radio" name="gender" id="gender2_update_input" value="F"> Female
+				  </label>
+			    </div>
+			  </div>
+			  
+			  <!-- 下拉框选择部门名字，提交部门id -->
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">deptName</label>
+			    <div class="col-sm-4">
+			    	<!-- 部门提交部门id即可 -->
+			      <select class="form-control" name="dId" id="dept_id_select_update"></select>
+			    </div>
+			  </div>
+			</form>
+	      
+	      </div>
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button id="btn_update_emp_request" type="button" class="btn btn-primary">更新</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 	<div class="container">
 		<!--标题  -->
 		<div class="row">
@@ -143,7 +210,7 @@
 			//$("#emp_add_modal form")[0].reset();
 			reset_form("#emp_add_modal form");
 			$("#emp_add_modal").modal();
-			getDepts();
+			getDepts("#dept_id_select");
 		})
 		
 		$("#btn_add_emp_request").click(function(){
@@ -198,6 +265,27 @@
 			
 			$("#emp_add_modal").modal('hide');
 		})
+		
+		$(document).on("click", ".edit_btn", function(){
+			//alert("click edit btn");
+			getDepts("#dept_id_select_update");
+			getEmp($(this).attr("edit_id"));
+			$("#emp_update_modal").modal();
+		})
+		
+		function getEmp(id){
+			$.ajax({
+				url:"emp/"+id,
+				type:"GET",
+				success:function(result){
+					//console.log(result);
+					$("#emp_update_static").text(result.map.emp.empName);
+					$("#input_update_email").val(result.map.emp.email);
+					$("#emp_update_modal input[name=gender]").val([result.map.emp.gender]);
+					$("#emp_update_modal select").val([result.map.emp.dId]);
+				}
+			});
+		}
 		
 		/* change事件 */
 		$("#input_emp_name").change(function(){
@@ -263,8 +351,9 @@
 			return return_value;
 		}
 		
-		function getDepts()
+		function getDepts(ele)
 		{
+			$(ele).empty();
 			$.ajax({
 				url:"depts",
 				type:"GET",
@@ -275,7 +364,7 @@
 					$.each(depts,function(){
 						//console.log(this);
 						var optionEle = $("<option></option>").append(this.deptName).attr("value", this.deptId);
-						$("#dept_id_select").append(optionEle);
+						$(ele).append(optionEle);
 					})
 				}
 			})
@@ -377,7 +466,8 @@
 				var departmentNameTd = $("<td></td>").append(item.dept.deptName);
 				//console.log(item.dept.deptName);
 				
-				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm").append("编辑");
+				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append("编辑");
+				editBtn.attr("edit_id", item.empId);
 				var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm").append("删除");
 				
 				var BtnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);

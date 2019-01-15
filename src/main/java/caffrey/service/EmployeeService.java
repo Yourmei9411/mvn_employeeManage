@@ -44,4 +44,8 @@ public class EmployeeService {
 		}
 	}
 
+	public Employee getEmployee(Integer id) {
+		return employeemapper.selectByPrimaryKey(id);
+	}
+
 }
