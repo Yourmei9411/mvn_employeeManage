@@ -310,7 +310,8 @@
 				data:$("#emp_update_modal form").serialize()+"&_method=PUT",
 				type:"POST",
 				success:function(result){
-					alert(result.message);
+					//alert(result.message);
+					$("#emp_update_modal").modal("hide");
 				}
 			})
 		});
