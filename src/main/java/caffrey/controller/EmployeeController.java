@@ -25,6 +25,16 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	
 	@ResponseBody
+	@RequestMapping(value="emp/{id}", method=RequestMethod.DELETE)
+	public Msg deleteEmployee(@PathVariable("id") Integer id)
+	{
+		System.out.println(id);
+		employeeService.deleteEmployee(id);
+		
+		return Msg.success();
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="emp/{empId}", method=RequestMethod.PUT)
 	public Msg updateEmployee(Employee emp)
 	{

@@ -266,6 +266,23 @@
 			$("#emp_add_modal").modal('hide');
 		})
 		
+		$(document).on("click", ".del_btn", function(){
+			//this的父类中的tr中的第二个td子元素
+			var empName = $(this).parents("tr").find("td:eq(1)").text();
+			var empId = $(this).attr("del_id");
+			//alert(empName);
+			if(confirm("确定要删除" + empName +"吗？"))
+			{
+				$.ajax({
+					url:"emp/"+empId,
+					type:"DELETE",
+					success:function(){
+						to_page(currentPage);
+					}
+				})
+			}
+		})
+		
 		$(document).on("click", ".edit_btn", function(){
 			//alert("click edit btn");
 			getDepts("#dept_id_select_update");
@@ -399,6 +416,8 @@
 			})
 		}
 		
+		var currentPage;
+		
 		function to_page(pn)
 		{
 			$.ajax({
@@ -412,6 +431,7 @@
 					buitd_page_nav(result);
 				}
 			});	
+			currentPage = pn;
 		}
 		
 		function buitd_page_nav(result)
@@ -497,8 +517,8 @@
 				
 				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn").append("编辑");
 				editBtn.attr("edit_id", item.empId);
-				var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm").append("删除");
-				
+				var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm del_btn").append("删除");
+				delBtn.attr("del_id", item.empId);
 				var BtnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
 				$("<tr></tr>").append(empIdTd)
 				.append(empNameTd)

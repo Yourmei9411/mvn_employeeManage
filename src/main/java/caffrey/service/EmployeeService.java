@@ -53,4 +53,9 @@ public class EmployeeService {
 		employeemapper.updateByPrimaryKeySelective(emp);
 	}
 
+	public void deleteEmployee(Integer id) {
+		// TODO Auto-generated method stub
+		employeemapper.deleteByPrimaryKey(id);
+	}
+
 }
