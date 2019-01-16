@@ -270,6 +270,7 @@
 			//alert("click edit btn");
 			getDepts("#dept_id_select_update");
 			getEmp($(this).attr("edit_id"));
+			$("#btn_update_emp_request").attr("edit_id",$(this).attr("edit_id"));
 			$("#emp_update_modal").modal();
 		})
 		
@@ -286,6 +287,33 @@
 				}
 			});
 		}
+		
+		$("#btn_update_emp_request").click(function(){
+			var email = $("#input_update_email").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			$("#input_update_email").parent().removeClass("has-error has-success");
+			$("#input_update_email").next().text("");
+			if(regEmail.test(email) == false)
+			{
+				$("#input_update_email").parent().addClass("has-error");
+				$("#input_update_email").next().text("邮箱格式错误");			
+				return_value = false;
+				return false;
+			}
+			else
+			{
+				$("#input_update_email").parent().addClass("has-success");
+			}
+			
+			$.ajax({
+				url:"emp/"+$(this).attr("edit_id"),
+				data:$("#emp_update_modal form").serialize()+"&_method=PUT",
+				type:"POST",
+				success:function(result){
+					alert(result.message);
+				}
+			})
+		});
 		
 		/* change事件 */
 		$("#input_emp_name").change(function(){

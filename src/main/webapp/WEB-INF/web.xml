@@ -37,6 +37,16 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 将部分页面POST请求 根据_method参数转化为PUT或者DELETE请求-->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!--字符编码过滤器  -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>

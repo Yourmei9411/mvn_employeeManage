@@ -48,4 +48,9 @@ public class EmployeeService {
 		return employeemapper.selectByPrimaryKey(id);
 	}
 
+	public void updateEmployee(Employee emp) {
+		// TODO Auto-generated method stub
+		employeemapper.updateByPrimaryKeySelective(emp);
+	}
+
 }

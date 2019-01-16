@@ -25,6 +25,16 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	
 	@ResponseBody
+	@RequestMapping(value="emp/{empId}", method=RequestMethod.PUT)
+	public Msg updateEmployee(Employee emp)
+	{
+		System.out.println(emp);
+		employeeService.updateEmployee(emp);
+		
+		return Msg.success();
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="emp/{id}", method=RequestMethod.GET)
 	public Msg GetEmployee(@PathVariable("id") Integer id)
 	{
